@@ -13,3 +13,7 @@ This application analyses an already existing C# solution's components by abstra
 ## After you start the application
 
 There will be some time to analyse all the projects in the solution after that a png will be created with a plot and also a json file will be created with the analysed projects' data
+
+## Output
+
+The output of the application will be a png and a json file with the same name and in the same folder as the solution file you have given.
