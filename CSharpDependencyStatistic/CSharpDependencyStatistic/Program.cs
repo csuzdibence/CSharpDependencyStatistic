@@ -35,7 +35,6 @@ public static class Program
 
         string pngFilePath = solutionPath + ".png";
         plotter.PlotGraph(dependencyStatistics, pngFilePath);
-        StartProcess(pngFilePath);
 
         var jsonContent = JsonSerializer.Serialize(dependencyStatistics.OrderBy(x => x.Distance), new JsonSerializerOptions
         {
