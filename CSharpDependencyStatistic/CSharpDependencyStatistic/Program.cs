@@ -15,6 +15,11 @@ public static class Program
         }
 
         string solutionPath = args[0];
+        if (!Path.IsPathRooted(solutionPath))
+        {
+            solutionPath = Path.Combine(Directory.GetCurrentDirectory(), solutionPath);
+        }
+
         if (!File.Exists(solutionPath))
         {
             Console.WriteLine("Solution file does not exist!");

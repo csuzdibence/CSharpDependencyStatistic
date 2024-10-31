@@ -15,4 +15,4 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 # Run the application
-ENTRYPOINT ["dotnet", "CSharpDependencyStatistic.exe"]
+ENTRYPOINT ["dotnet", "CSharpDependencyStatistic.dll"]

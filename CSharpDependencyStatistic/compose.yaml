@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  csharp-dependency-statistic:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: csuzdibence/csharp-dependency-statistic:latest
+    container_name: csharp_dependency_statistic_app
+    volumes:
+      - ${SOLUTION_PATH_FOLDER}:/app
+    working_dir: /app
+    restart: unless-stopped
