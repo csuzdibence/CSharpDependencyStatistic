@@ -6,8 +6,11 @@ WORKDIR /app
 COPY . . 
 RUN dotnet restore
 
-# Build the solution
-RUN dotnet publish -c Release -o /app/publish
+# Build the solution without specifying --output
+RUN dotnet build CSharpDependencyStatistic.sln -c Release
+
+# Publish the application from the individual project instead of the solution
+RUN dotnet publish CSharpDependencyStatistic/CSharpDependencyStatistic.csproj -c Release -o /app/publish
 
 # Use the runtime image for the final build
 FROM mcr.microsoft.com/dotnet/sdk:8.0

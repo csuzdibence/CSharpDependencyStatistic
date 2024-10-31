@@ -18,6 +18,11 @@
 
         public string ProjectName { get; }
 
+        public override string? ToString()
+        {
+            return $"{ProjectName} has {Instability} instability and {Abstractness} abstractness.";
+        }
+
         private double CalculateAbstractness(int totalTypes, int abstractTypes)
         {
             return totalTypes == 0 ? 0 : (double)abstractTypes / totalTypes;
@@ -27,5 +32,7 @@
         {
             return (efferentCoupling + afferentCoupling) == 0 ? 0 : (double)efferentCoupling / (efferentCoupling + afferentCoupling);
         }
+
+
     }
 }

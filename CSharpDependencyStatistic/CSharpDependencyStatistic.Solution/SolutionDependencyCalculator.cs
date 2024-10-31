@@ -3,16 +3,19 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using CSharpDependencyStatistic.Solution.Extensions;
 using CSharpDependencyStatistic.Statistic;
 using System.Collections.Concurrent;
+using Microsoft.Extensions.Logging;
 
 namespace CSharpDependencyStatistic.Solution
 {
     public class SolutionDependencyCalculator
     {
         private readonly SolutionReader solutionReader;
+        private readonly ILogger<SolutionDependencyCalculator> logger;
 
-        public SolutionDependencyCalculator(SolutionReader solutionReader)
+        public SolutionDependencyCalculator(SolutionReader solutionReader, ILogger<SolutionDependencyCalculator> logger)
         {
             this.solutionReader = solutionReader;
+            this.logger = logger;
         }
 
         public async Task<List<DependencyStatistic>> GetSolutionDependencies(string solutionPath)
@@ -69,8 +72,9 @@ namespace CSharpDependencyStatistic.Solution
             }
 
             afferentCoupling = CalculateAfferentCoupling(project, solution);
-
-            return new DependencyStatistic(project.Name, afferentCoupling, efferentCoupling, totalTypes, abstractTypes);
+            var statistic = new DependencyStatistic(project.Name, afferentCoupling, efferentCoupling, totalTypes, abstractTypes);
+            logger.LogInformation(statistic.ToString());
+            return statistic;
         }
 
         private int CalculateAfferentCoupling(Project project, Microsoft.CodeAnalysis.Solution solution)

@@ -1,6 +1,7 @@
 ﻿using CSharpDependencyStatistic.Plot;
 using CSharpDependencyStatistic.Solution;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -8,6 +9,7 @@ public static class Program
 {
     public static void Main(string[] args)
     {
+        Console.WriteLine($"{nameof(CSharpDependencyStatistic)} application initialised!");
         if (args.Length == 0)
         {
             Console.WriteLine("You did not give in a solution file path!");
@@ -31,6 +33,7 @@ public static class Program
         var solutionDependencyCalculator = serviceProvider.GetService<SolutionDependencyCalculator>();
         var plotter = serviceProvider.GetService<DependencyStatisticPlotter>();
 
+        Console.WriteLine("Solution dependencies are started to get analysed...");
         var dependencyStatistics = solutionDependencyCalculator.GetSolutionDependencies(solutionPath).Result;
 
         string pngFilePath = solutionPath + ".png";
@@ -58,6 +61,11 @@ public static class Program
     private static ServiceProvider ConfigureServices()
     {
         var serviceCollection = new ServiceCollection();
+        serviceCollection.AddLogging(builder =>
+         {
+             builder.AddConsole();
+             builder.SetMinimumLevel(LogLevel.Information);
+         });
         serviceCollection.AddTransient<SolutionReader>();
         serviceCollection.AddTransient<SolutionDependencyCalculator>();
         serviceCollection.AddTransient<DependencyStatisticPlotter>();
