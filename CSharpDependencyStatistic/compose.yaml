@@ -8,6 +8,6 @@ services:
     image: csuzdibence/csharp-dependency-statistic:latest
     container_name: csharp_dependency_statistic_app
     volumes:
-      - ${SOLUTION_PATH_FOLDER}:/app
+      - ${SOLUTION_PATH_FOLDER}:/app/solution
     working_dir: /app
     restart: unless-stopped

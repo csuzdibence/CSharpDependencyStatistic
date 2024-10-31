@@ -17,7 +17,8 @@ public static class Program
         string solutionPath = args[0];
         if (!Path.IsPathRooted(solutionPath))
         {
-            solutionPath = Path.Combine(Directory.GetCurrentDirectory(), solutionPath);
+            string baseDirectory = Environment.GetEnvironmentVariable("SOLUTION_BASE_DIRECTORY") ?? Environment.CurrentDirectory;
+            solutionPath = Path.Combine(baseDirectory, solutionPath);
         }
 
         if (!File.Exists(solutionPath))

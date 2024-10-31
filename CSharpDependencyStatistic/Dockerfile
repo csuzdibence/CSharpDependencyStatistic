@@ -10,9 +10,11 @@ RUN dotnet restore
 RUN dotnet publish -c Release -o /app/publish
 
 # Use the runtime image for the final build
-FROM mcr.microsoft.com/dotnet/runtime:8.0
+FROM mcr.microsoft.com/dotnet/sdk:8.0
 WORKDIR /app
 COPY --from=build /app/publish .
+
+ENV SOLUTION_BASE_DIRECTORY=/app/solution
 
 # Run the application
 ENTRYPOINT ["dotnet", "CSharpDependencyStatistic.dll"]
