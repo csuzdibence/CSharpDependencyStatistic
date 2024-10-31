@@ -29,22 +29,28 @@ public static class Program
 
         var serviceProvider = ConfigureServices();
         var solutionDependencyCalculator = serviceProvider.GetService<SolutionDependencyCalculator>();
+        var plotter = serviceProvider.GetService<DependencyStatisticPlotter>();
 
         var dependencyStatistics = solutionDependencyCalculator.GetSolutionDependencies(solutionPath).Result;
+
+        string pngFilePath = solutionPath + ".png";
+        plotter.PlotGraph(dependencyStatistics, pngFilePath);
+        StartProcess(pngFilePath);
+
         var jsonContent = JsonSerializer.Serialize(dependencyStatistics.OrderBy(x => x.Distance), new JsonSerializerOptions
         {
             WriteIndented = true,
         });
         string jsonPath = solutionPath + ".json";
         File.WriteAllText(jsonPath, jsonContent);
-        StartJsonProcess(jsonPath);
+        StartProcess(jsonPath);
     }
 
-    private static void StartJsonProcess(string jsonPath)
+    private static void StartProcess(string filePath)
     {
         var processStartInfo = new ProcessStartInfo
         {
-            FileName = jsonPath,
+            FileName = filePath,
             UseShellExecute = true
         };
         Process.Start(processStartInfo);
