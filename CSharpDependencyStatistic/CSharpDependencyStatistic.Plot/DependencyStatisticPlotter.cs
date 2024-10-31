@@ -9,7 +9,7 @@ namespace CSharpDependencyStatistic.Plot
         private const string PlotTitle = "Abstractness vs. Instability";
         private const string PlotXLabel = "Abstractness (A)";
         private const string PlotYLabel = "Instability (I)";
-        private const int LabelFontSize = 6;
+        private const int LabelFontSize = 12;
 
         public void PlotGraph(List<DependencyStatistic> dependencyStatistics, string pngFileName)
         {

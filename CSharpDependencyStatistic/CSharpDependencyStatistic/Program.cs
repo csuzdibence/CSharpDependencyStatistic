@@ -45,17 +45,6 @@ public static class Program
         });
         string jsonPath = solutionPath + ".json";
         File.WriteAllText(jsonPath, jsonContent);
-        StartProcess(jsonPath);
-    }
-
-    private static void StartProcess(string filePath)
-    {
-        var processStartInfo = new ProcessStartInfo
-        {
-            FileName = filePath,
-            UseShellExecute = true
-        };
-        Process.Start(processStartInfo);
     }
 
     private static ServiceProvider ConfigureServices()
